@@ -1,0 +1,63 @@
+body {
+  background: #111;
+  color: #33ff33; /* Verde fósforo clásico */
+  font-family: 'Courier New', Courier, monospace;
+  overflow: hidden;
+}
+
+/* Efecto de líneas de escaneo */
+.crt-overlay {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+              linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  background-size: 100% 4px, 3px 100%;
+  pointer-events: none; /* Para poder hacer click a lo de abajo */
+  z-index: 10;
+}
+
+/* Animación de parpadeo sutil */
+.screen {
+  animation: flicker 0.15s infinite;
+  padding: 20px;
+}
+
+@keyframes flicker {
+  0% { opacity: 0.98; }
+  50% { opacity: 1; }
+  100% { opacity: 0.99; }
+}
+
+.icon-grid {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.icon {
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.icon img {
+  width: 64px;
+  height: 64px;
+  display: block;
+  filter: sepia(100%) hue-rotate(90deg) brightness(1.2); /* Hace que tus fotos se vean verdes */
+}
+
+.icon:hover {
+  transform: scale(1.1);
+  text-shadow: 0 0 8px #33ff33;
+}
+
+#status-bar {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  border-top: 1px solid #33ff33;
+  padding-top: 10px;
+  text-transform: uppercase;
+}
