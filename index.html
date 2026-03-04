@@ -1,36 +1,171 @@
-<div class="crt-overlay"></div> <div class="screen">
-  <header>
-    <h1>SISTEMA OPERATIVO V1.0</h1>
-  </header>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undertale Encore</title>
+    <style>
+        /* --- ESTILOS BASE Y FONDO --- */
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Courier New', Courier, monospace; /* Fuente retro por defecto */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            justify-content: space-between; /* Distribuye título arriba, iconos centro, info abajo */
+            overflow: hidden; /* Evita barras de desplazamiento */
+            position: relative;
+        }
 
-  <main class="icon-grid">
-    <div class="icon" data-info="Conoce más sobre este proyecto" onclick="location.href='#proyecto'">
-      <img src="tu-imagen-1.png" alt="Sobre el proyecto">
-      <span>PROYECTO</span>
-    </div>
-    
-    <div class="icon" data-info="Reproductor de audio integrado" onclick="location.href='#musica'">
-      <img src="tu-imagen-2.png" alt="Música">
-      <span>MÚSICA</span>
+        /* --- FILTRO CRT (Televisor de Tubo) --- */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            /* Líneas de escaneo sutiles */
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 3px 100%;
+            z-index: 10; /* Encima de todo */
+            pointer-events: none; /* Permite hacer clic a través del filtro */
+        }
+
+        /* Efecto de viñeta (bordes oscuros) y curvatura sutil */
+        body::after {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,0.8) 100%);
+            z-index: 11;
+            pointer-events: none;
+        }
+
+        /* Pequeño parpadeo de pantalla */
+        @keyframes flicker {
+            0% { opacity: 0.97; }
+            5% { opacity: 0.95; }
+            10% { opacity: 0.97; }
+            15% { opacity: 0.9; }
+            20% { opacity: 0.98; }
+            100% { opacity: 1; }
+        }
+        
+        .crt-content {
+            animation: flicker 0.1s infinite;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            width: 100%;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* --- TÍTULO --- */
+        h1 {
+            font-size: 3em;
+            text-align: center;
+            margin-top: 40px;
+            letter-spacing: 4px;
+            text-shadow: 2px 2px 0px #f00, -2px -2px 0px #00f; /* Pequeño efecto cromático */
+        }
+
+        /* --- CONTENEDOR DE ICONOS --- */
+        .opciones-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px; /* Espacio entre imágenes */
+            flex-grow: 1; /* Ocupa el espacio central */
+        }
+
+        /* --- ESTILO DE CADA ICONO/IMAGEN --- */
+        .opcion-info {
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .opcion-info img {
+            width: 150px; /* Tamaño GRANDE de las imágenes */
+            height: 150px;
+            object-fit: contain; /* Mantiene proporción */
+            display: block;
+            /* Opcional: filtro para dar un tono verdoso o de fósforo */
+            /* filter: sepia(100%) hue-rotate(90deg) brightness(1.2) contrast(1.2); */
+        }
+
+        /* Efecto al poner el mouse encima */
+        .opcion-info:hover {
+            transform: scale(1.1); /* Agranda un poco */
+        }
+
+        /* --- ÁREA DE DESCRIPCIÓN (Abajo) --- */
+        #descripcion-area {
+            font-size: 1.5em;
+            margin-bottom: 50px;
+            height: 1.6em; /* Espacio fijo para que no salte el contenido */
+            text-align: center;
+            width: 80%;
+            border-top: 2px solid white;
+            padding-top: 15px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="crt-content">
+        <h1>UNDERTALE ENCORE</h1>
+
+        <div class="opciones-container">
+            
+            <div class="opcion-info" data-text="SOBRE EL PROYECTO">
+                <img src="imagenes/proyecto.png" alt="Icono Proyecto">
+            </div>
+
+            <div class="opcion-info" data-text="MÚSICA">
+                <img src="imagenes/musica.png" alt="Icono Música">
+            </div>
+
+            <div class="opcion-info" data-text="ARTE CONCEPTUAL">
+                <img src="imagenes/arte.png" alt="Icono Arte">
+            </div>
+
+            <div class="opcion-info" data-text="PANEL DE LA COMUNIDAD">
+                <img src="imagenes/comunidad.png" alt="Icono Comunidad">
+            </div>
+
+            <div class="opcion-info" data-text="SUGERENCIAS O SOLICITUDES">
+                <img src="imagenes/sugerencias.png" alt="Icono Sugerencias">
+            </div>
+
+        </div>
+
+        <div id="descripcion-area"></div>
     </div>
 
-    <div class="icon" data-info="Galería de arte y bocetos" onclick="location.href='#arte'">
-      <img src="tu-imagen-3.png" alt="Arte">
-      <span>ARTE</span>
-    </div>
+    <script>
+        const opciones = document.querySelectorAll('.opcion-info');
+        const areaDescripcion = document.getElementById('descripcion-area');
 
-    <div class="icon" data-info="Foro y panel de la comunidad" onclick="location.href='#comunidad'">
-      <img src="tu-imagen-4.png" alt="Comunidad">
-      <span>COMUNIDAD</span>
-    </div>
+        opciones.forEach(opcion => {
+            // Cuando el mouse entra: muestra el texto
+            opcion.addEventListener('mouseenter', function() {
+                const texto = this.getAttribute('data-text');
+                areaDescripcion.textContent = texto;
+            });
 
-    <div class="icon" data-info="Envía tus ideas o reportes" onclick="location.href='#sugerencias'">
-      <img src="tu-imagen-5.png" alt="Sugerencias">
-      <span>BUZÓN</span>
-    </div>
-  </main>
-
-  <footer id="status-bar">
-    ESPERANDO ACCIÓN...
-  </footer>
-</div>
+            // Cuando el mouse sale: borra el texto
+            opcion.addEventListener('mouseleave', function() {
+                areaDescripcion.textContent = '';
+            });
+        });
+    </script>
+</body>
+</html>
